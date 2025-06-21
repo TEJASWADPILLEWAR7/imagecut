@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { CldImage } from "next-cloudinary";
-import { blob } from "stream/consumers";
 
 const socialFormats = {
   "Instagram Square (1:1)": { width: 1080, height: 1080, aspectRatio: "1:1" },
@@ -23,10 +22,8 @@ function SocialShare() {
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (uploadedImage) {
-      setIsTransforming(true);
-    }
-  }, [selectedFormat, uploadedImage]);
+    setIsTransforming(true);
+  }, []);
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -44,20 +41,23 @@ function SocialShare() {
         method: "POST",
         body: formData,
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
       const data = await response.json();
       setUploadedImage(data.publicId);
     } catch (error) {
-      console.log(error);
-      alert("Response filed");
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image. Please try again.");
     } finally {
       setIsUploading(false);
     }
   };
 
   const handleDownload = () => {
-    if (!imageRef.current) {
-      return;
-    }
+    if (!imageRef.current) return;
 
     fetch(imageRef.current.src)
       .then((response) => response.blob())
@@ -70,9 +70,8 @@ function SocialShare() {
           .toLowerCase()}.png`;
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        document.body.removeChild(link); // ✅ only once
         window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
       });
   };
 
@@ -136,7 +135,6 @@ function SocialShare() {
                     sizes="100vw"
                     alt="transformed image"
                     crop="fill"
-                    aspectRatio={socialFormats[selectedFormat].aspectRatio}
                     gravity="auto"
                     ref={imageRef}
                     onLoad={() => setIsTransforming(false)}
