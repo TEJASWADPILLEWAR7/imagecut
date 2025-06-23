@@ -3,20 +3,20 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, useClerk, useUser } from "@clerk/nextjs";
 import {
   LogOutIcon,
   MenuIcon,
   LayoutDashboardIcon,
   Share2Icon,
-  UploadIcon,
   ImageIcon,
+  Image,
 } from "lucide-react";
 
 const sidebarItems = [
   { href: "/home", icon: LayoutDashboardIcon, label: "Home Page" },
   { href: "/social-share", icon: Share2Icon, label: "Social Share" },
-  { href: "/video-upload", icon: UploadIcon, label: "Video Upload" },
+  { href: "/bg-remove", icon: Image, label: "Background Remove" },
 ];
 
 export default function AppLayout({
@@ -28,7 +28,7 @@ export default function AppLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { signOut } = useClerk();
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   const handleLogoClick = () => {
     router.push("/");
@@ -66,6 +66,11 @@ export default function AppLayout({
                 </div>
               </Link>
             </div>
+            {!isSignedIn && (
+              <div className="flex gap-4">
+                <SignInButton mode="modal" /> <SignUpButton mode="modal" />
+              </div>
+            )}
             <div className="flex-none flex items-center space-x-4">
               {user && (
                 <>
