@@ -7,14 +7,12 @@ import { SignInButton, SignUpButton, useClerk, useUser } from "@clerk/nextjs";
 import {
   LogOutIcon,
   MenuIcon,
-  LayoutDashboardIcon,
   Share2Icon,
   ImageIcon,
   Image,
 } from "lucide-react";
 
 const sidebarItems = [
-  { href: "/home", icon: LayoutDashboardIcon, label: "Home Page" },
   { href: "/social-share", icon: Share2Icon, label: "Social Share" },
   { href: "/bg-remove", icon: Image, label: "Background Remove" },
 ];
