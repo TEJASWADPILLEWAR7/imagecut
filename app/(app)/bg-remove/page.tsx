@@ -93,7 +93,7 @@ function BGRemove() {
 
           {isTransforming && (
             <div className="mt-4 text-center text-sm text-gray-300">
-              Transforming image, please wait...
+              Upload Image
               <div className="mt-2">
                 <progress className="progress progress-secondary w-56"></progress>
               </div>
