@@ -15,55 +15,51 @@ function Page({ children }: Readonly<{ children: React.ReactNode }>) {
   const { user, isSignedIn } = useUser();
   const { signOut } = useClerk();
 
-  const handleLogoClick = () => {
-    router.push("/");
-  };
+  const handleLogoClick = () => router.push("/");
 
-  const handleLogOut = async () => {
-    await signOut();
-  };
+  const handleLogOut = async () => await signOut();
 
   return (
-    <div className="min-h-screen bg-base-100 text-amber-50 px-6 flex flex-col">
-      <header className="w-full bg-base-200 mt-5 rounded-4xl">
-        <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex-none lg:hidden"></div>
-          <div className="flex-1">
-            <Link href="/" onClick={handleLogoClick}>
-              <div className="btn btn-ghost normal-case text-xl font-bold tracking-tight cursor-pointer md:text-2xl">
-                ImageCut
-              </div>
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-[#1e1b32] to-[#0c1023] text-white px-6 flex flex-col font-sans">
+      {/* Header */}
+      <header className="w-full mt-6 rounded-full bg-black/30 backdrop-blur-md">
+        <div className="navbar max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+          {/* Logo */}
+          <div
+            onClick={handleLogoClick}
+            className="text-2xl font-bold tracking-tight cursor-pointer"
+          >
+            ImageCut
           </div>
-          {!isSignedIn && (
-            <div className="flex gap-4 cursor-pointer ">
-              <button className="btn btn-outline btn-primary hidden md:block">
-                <SignInButton mode="modal" />
-              </button>
-              <button className="btn btn-outline btn-primary ">
-                <SignUpButton mode="modal" />
-              </button>
-            </div>
-          )}
-          <div className="flex-none flex items-center space-x-4">
+
+          {/* Auth Buttons */}
+          <div className="flex items-center gap-4">
+            {!isSignedIn && (
+              <>
+                <button className="border border-purple-400 px-4 py-1 rounded-full hover:bg-purple-600 transition hidden md:block">
+                  <SignInButton mode="modal" />
+                </button>
+                <button className="border border-purple-400 px-4 py-1 rounded-full hover:bg-purple-600 transition">
+                  <SignUpButton mode="modal" />
+                </button>
+              </>
+            )}
             {user && (
               <>
-                <div className="avatar">
-                  <div className="w-8 h-8 rounded-full">
-                    <img
-                      src={user.imageUrl}
-                      alt={user.username || user.emailAddresses[0].emailAddress}
-                    />
-                  </div>
+                <div className="avatar w-8 h-8 rounded-full overflow-hidden md:hidden">
+                  <img
+                    src={user.imageUrl}
+                    alt={user.username || user.emailAddresses[0].emailAddress}
+                  />
                 </div>
-                <span className="text-sm truncate max-w-xs lg:max-w-md">
-                  {user.username || user.emailAddresses[0].emailAddress}
+                <span className="hidden md:block text-sm truncate max-w-xs ">
+                  {user.fullName}
                 </span>
                 <button
                   onClick={handleLogOut}
                   className="btn btn-ghost btn-circle"
                 >
-                  <LogOutIcon className="h-6 w-6" />
+                  <LogOutIcon className="h-5 w-5" />
                 </button>
               </>
             )}
@@ -71,25 +67,30 @@ function Page({ children }: Readonly<{ children: React.ReactNode }>) {
         </div>
       </header>
 
-      <main className="flex-grow flex flex-col items-center justify-center text-center space-y-6 bg-base-100 ">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-wide">
-          Transform Images in Seconds — No Photoshop Needed!
+      {/* Hero Section */}
+      <main className="flex-grow flex flex-col items-center justify-center text-center px-4 space-y-6">
+        <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text">
+          Transform Images in Seconds
         </h1>
-        <p className="max-w-xl hidden md:block">
+        <p className="max-w-2xl text-gray-300 text-lg italic">
           Remove backgrounds, change aspect ratios, and enhance your images with{" "}
-          <em>AI tools made for creators.</em>
+          <span className="text-purple-300">AI tools made for creators.</span>
         </p>
 
         <div className="flex flex-col md:flex-row gap-4 mt-6">
           {cta.map((item) => (
             <Link key={item.href} href={item.href}>
-              <button className="px-6 py-3 border-2 border-black rounded-xl hover:bg-black hover:text-white transition-all">
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold shadow-md hover:shadow-[0px_0px_10px_6px_#b794f4] transition transform hover:scale-110">
                 {item.label}
               </button>
             </Link>
           ))}
         </div>
       </main>
+      <footer className="w-full text-center py-4 mt-12 border-t border-white/10 text-sm text-white/60 hover:text-white transition">
+        Created with ❤️ by{" "}
+        <span className="text-white font-semibold">Tejas Wadpillewar</span>
+      </footer>
     </div>
   );
 }

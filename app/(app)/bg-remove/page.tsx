@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CldImage } from "next-cloudinary";
 
-function SocialShare() {
+function BGRemove() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
@@ -64,24 +64,25 @@ function SocialShare() {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Background Removal
-      </h1>
+    <div className="min-h-screen px-6 py-10 bg-gradient-to-br from-[#1e1b32] to-[#0c1023] text-white">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-purple-400 to-blue-500 text-transparent bg-clip-text">
+          Background Removal
+        </h1>
 
-      <div className="card">
-        <div className="card-body">
-          <h2 className="card-title mb-4">Upload an Image</h2>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Choose an image file</span>
-            </label>
-            <input
-              type="file"
-              onChange={handleFileUpload}
-              className="file-input file-input-bordered file-input-primary w-full"
-            />
-          </div>
+        <div className="bg-white/5 backdrop-blur-md shadow-xl border border-white/10 rounded-2xl p-6">
+          <h2 className="text-2xl font-semibold mb-4 text-purple-300">
+            Upload an Image
+          </h2>
+
+          <label className="block mb-2 text-sm text-gray-300">
+            Choose an image file
+          </label>
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            className="file-input file-input-bordered file-input-primary w-full bg-white text-black"
+          />
 
           {isUploading && (
             <div className="mt-4">
@@ -91,7 +92,7 @@ function SocialShare() {
 
           {uploadedImage && (
             <>
-              <div className="mt-6">
+              <div className="mt-6 rounded-lg overflow-hidden border border-white/20">
                 <CldImage
                   width={imageDimensions.width || 800}
                   height={imageDimensions.height || 600}
@@ -113,8 +114,11 @@ function SocialShare() {
                 />
               </div>
 
-              <div className="card-actions justify-end mt-6">
-                <button className="btn btn-primary" onClick={handleDownload}>
+              <div className="flex justify-end mt-6">
+                <button
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition"
+                  onClick={handleDownload}
+                >
                   Download
                 </button>
               </div>
@@ -126,4 +130,4 @@ function SocialShare() {
   );
 }
 
-export default SocialShare;
+export default BGRemove;
