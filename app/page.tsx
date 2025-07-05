@@ -10,13 +10,12 @@ const cta = [
   { href: "/bg-remove", icon: Image, label: "Background Remove" },
 ];
 
-function Page({ children }: Readonly<{ children: React.ReactNode }>) {
+function Page() {
   const router = useRouter();
   const { user, isSignedIn } = useUser();
   const { signOut } = useClerk();
 
   const handleLogoClick = () => router.push("/");
-
   const handleLogOut = async () => await signOut();
 
   return (
@@ -47,12 +46,12 @@ function Page({ children }: Readonly<{ children: React.ReactNode }>) {
             {user && (
               <>
                 <div className="avatar w-8 h-8 rounded-full overflow-hidden md:hidden">
-                  <img
+                  <Image
                     src={user.imageUrl}
                     alt={user.username || user.emailAddresses[0].emailAddress}
                   />
                 </div>
-                <span className="hidden md:block text-sm truncate max-w-xs ">
+                <span className="hidden md:block text-sm truncate max-w-xs">
                   {user.fullName}
                 </span>
                 <button
@@ -87,6 +86,7 @@ function Page({ children }: Readonly<{ children: React.ReactNode }>) {
           ))}
         </div>
       </main>
+
       <footer className="w-full text-center py-4 mt-12 border-t border-white/10 text-sm text-white/60 hover:text-white transition">
         Created with ❤️ by{" "}
         <span className="text-white font-semibold">Tejas Wadpillewar</span>
