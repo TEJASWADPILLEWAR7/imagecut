@@ -23,6 +23,7 @@ function BGRemove() {
     if (!file) return;
 
     setIsUploading(true);
+    setIsTransforming(true);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -87,6 +88,15 @@ function BGRemove() {
           {isUploading && (
             <div className="mt-4">
               <progress className="progress progress-primary w-full"></progress>
+            </div>
+          )}
+
+          {isTransforming && (
+            <div className="mt-4 text-center text-sm text-gray-300">
+              Transforming image, please wait...
+              <div className="mt-2">
+                <progress className="progress progress-secondary w-56"></progress>
+              </div>
             </div>
           )}
 

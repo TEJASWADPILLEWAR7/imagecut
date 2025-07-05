@@ -1,9 +1,10 @@
 "use client";
-import { Image, LogOutIcon, Share2Icon } from "lucide-react";
+import { LogOutIcon, Share2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SignInButton, useClerk, SignUpButton, useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 const cta = [
   { href: "/social-share", icon: Share2Icon, label: "Social Share" },
